@@ -1,3 +1,3 @@
 all:
-	gcc -o list_test list.c list_test.c -I
+	gcc -o list_test list.c list_test.c 
 
