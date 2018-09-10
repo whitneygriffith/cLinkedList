@@ -17,13 +17,10 @@ Resources:
 http://cslibrary.stanford.edu/
 http://cslibrary.stanford.edu/101/
 
-TODO:
+Remember:
 
 remove from list 
 - The caller is expected to free the string returned when finished with it.
-
-Questions:
-- remove from list expects you to delete the entire item as well in addition to returning the string? 
 
 Submission: 
 
