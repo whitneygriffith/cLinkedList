@@ -7,7 +7,12 @@
 
 /* Allocates and initializes a new list*/
 list *create_list(){
-    list *list = malloc(sizeof(list));
+    list *list = malloc(sizeof(list)); //Create List Data Type and Allocate Memory for it
+    node *head = malloc(sizeof(node));
+    head->value = "";
+    head->next = 0;
+    list -> head = head;
+    list-> tail = head;
     return list;
 }
 
@@ -16,23 +21,26 @@ list *create_list(){
 * Returns 0 if successful, non-zero otherwise. */
 
 int add_to_list(list *ll, char *item){
-    node *newNode = malloc(sizeof(*newNode));
-
-
+    node *newNode = malloc(sizeof(node)); //create new node item to store item's details
     //compute length of string and assign it to the new node's value
-   
-    int len = strlen(item);
-    char *sstring = newNode->value;
-    sstring = malloc(len + 1); //allocate memory for the string
-    strncpy(sstring, item, len + 1); //store the new string into the new node's value 
+    int len = strlen(item) + 1;
+    char *sstring = malloc(len +1);
+    strncpy(sstring, item, len); //store the new string into the new node's value
+    newNode -> value = sstring; //set the new node value to input string
+    newNode -> next = 0; //create node struct for new item
 
-    newNode -> next = NULL; //create node struct for new item
-    node *lastItem = ll -> tail; //grab the last item in list
-
-    lastItem = malloc(sizeof(lastItem)); //change the last item next pointer to point to new item
-    lastItem ->next = newNode;
-        
-    ll -> tail = newNode; //Update the list's tail
+    if (!strcmp(ll->head->value, "") && ll->head->next == 0)
+    {
+        ll->head = newNode;
+        ll->tail = newNode;
+    } 
+    else{ 
+        //always add new node as the tail of the list
+        node *lastItem = malloc(sizeof(node));
+        lastItem = ll->tail;      //grab the last item in list
+        lastItem->next = newNode; //change the last item next pointer to point to new item
+        ll->tail = newNode;       //Update the list's tail
+    }
     return 0;
 }
 
@@ -40,20 +48,28 @@ int add_to_list(list *ll, char *item){
 * returns a pointer to it. The caller is expected to free
 * the string returned when finished with it. */
 char *remove_from_list(list *ll){
-    node *removing = ll -> head;
+    node *removing = malloc(sizeof(node));
+    removing = ll -> head;
 
-    char *toDelete = removing->value; //string of item in front of list
+    char *stringDelete = removing->value; //string of item in front of list
     ll ->head = removing ->next; //set the head of the list as the item to be removed next 
     free(removing); //frees the node of the item to be deleted
-    return toDelete; //return the pointer to the string at the front of the list
+    
+    //check if there was only one item in the list
+    if (ll->head == ll->tail){
+        free(ll->tail);
+    }
+
+    return stringDelete; //return the pointer to the string at the front of the list
 }
 
 /* Prints every string in the list, with a new line
 * character at the end of each string */
 void print_list(list *ll){
-    node *current = ll -> head;
-    while (current -> next != NULL){
-        printf(current -> value, "\n");
+    node *current = malloc(sizeof(node));
+    current = ll -> head;
+    while (current != NULL){
+        printf("%s \n", current -> value);
         current = current -> next;
     }
 }
@@ -64,8 +80,9 @@ void print_list(list *ll){
 * allocated to store items in the list should be freed. */
 void flush_list(list *ll){
 
-    node *current = ll -> head;
-    node *next;
+    node *current = malloc(sizeof(node)); 
+    current = ll -> head;
+    node *next = malloc(sizeof(node));
     while (current != NULL ){
         next = current -> next;
         free(current);
@@ -82,8 +99,9 @@ void flush_list(list *ll){
 * allocated strings and the list itself.*/
 
 void free_list(list *ll){
-    node *current = ll->head;
-    node *next;
+    node *current = malloc(sizeof(node));
+    current = ll->head;
+    node *next = malloc(sizeof(node));
     while (current != NULL)
     {
         next = current->next;
@@ -93,4 +111,6 @@ void free_list(list *ll){
     }
     free(next);
     free(ll);
+    free(current);
+    return;
 }

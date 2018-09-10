@@ -24,3 +24,7 @@ remove from list
 
 Questions:
 - remove from list expects you to delete the entire item as well in addition to returning the string? 
+
+Submission: 
+
+tar -zcvf whitney.griffith-project1.tgz whitney.griffith-project1/
